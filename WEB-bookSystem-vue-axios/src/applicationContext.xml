@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE beans [
+    <!ELEMENT beans (bean*)>
+    <!ELEMENT bean (property*)>
+    <!ELEMENT property (#PCDATA)>
+
+    <!ATTLIST bean id ID #REQUIRED>
+    <!ATTLIST bean class CDATA #IMPLIED>
+    <!ATTLIST property name CDATA #IMPLIED>
+    <!ATTLIST property ref IDREF #IMPLIED>
+]>
+
+<!--suppress CheckTagEmptyBody -->
+<beans>
+    <bean id="page" class="main.com.WebBook.myssm.myspringmvc.PageController"/>
+    <!-- DAO -->
+    <bean id="userDAO" class="main.com.WebBook.book.dao.impl.UserDAOImpl"/>
+    <bean id="bookDAO" class="main.com.WebBook.book.dao.impl.BookDAOImpl"></bean>
+    <bean id="cartItemDAO" class="main.com.WebBook.book.dao.impl.CartItemDAOImpl"></bean>
+    <bean id="orderDAO" class="main.com.WebBook.book.dao.impl.OrderDAOImpl"></bean>
+    <bean id="orderItemDAO" class="main.com.WebBook.book.dao.impl.OrderItemDAOImpl"></bean>
+
+    <!-- service -->
+    <bean id="userService" class="main.com.WebBook.book.service.impl.UserServiceImpl">
+        <property name="userDAO" ref="userDAO"/>
+    </bean>
+    <bean id="bookService" class="main.com.WebBook.book.service.impl.BookServiceImpl">
+        <property name="bookDAO" ref="bookDAO"></property>
+    </bean>
+    <bean id="cartItemService" class="main.com.WebBook.book.service.impl.CartItemServiceImpl">
+        <property name="cartItemDAO" ref="cartItemDAO"></property>
+        <property name="bookService" ref="bookService"></property>
+    </bean>
+    <bean id="orderService" class="main.com.WebBook.book.service.impl.OrderServiceImpl">
+        <property name="orderDAO" ref="orderDAO"></property>
+        <property name="orderItemDAO" ref="orderItemDAO"></property>
+        <property name="cartItemDAO" ref="cartItemDAO"></property>
+    </bean>
+
+<!--    controller ;  与中央控制器有关 所以id要严格限制-->
+     <bean id="user" class="main.com.WebBook.book.controller.UserController">
+        <property name="userService" ref="userService"/>
+         <property name="cartItemService" ref="cartItemService"></property>
+    </bean>
+    <bean id="book" class="main.com.WebBook.book.controller.BookController">
+        <property name="bookService" ref="bookService"></property>
+    </bean>
+    <bean id="cart" class="main.com.WebBook.book.controller.CartController">
+        <property name="cartItemService" ref="cartItemService"></property>
+    </bean>
+    <bean id="order" class="main.com.WebBook.book.controller.OrderController">
+        <property name="orderService" ref="orderService"></property>
+    </bean>
+
+</beans>

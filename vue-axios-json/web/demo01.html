@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script language="JavaScript" src="script/vue.js"></script>
+<!--    在这个script里面 写具体的方法..属性...-->
+    <script language="JavaScript">
+        function hello(){
+            //当点击的时候 会调用这个hello方法  执行 person.sayHello();
+            person.sayHello();
+        }
+        //在js里定义对象的方式 两个
+    /*    var person = new Object();
+        person.pid="p001";
+        person.pname="jim";
+        person.sayHello=function (){
+            alert("Hello world");
+        }*/
+        var person={
+            //定义对象  k : v
+            "pid":"p001",
+            "pname":"jim",
+            "sayHello":function (){
+                alert("hello world");
+            }
+        };
+        // 当页面加载完成的时候调用这个匿名函数
+        window.onload=function (){
+           var vue= new Vue({
+
+           });
+        }
+    </script>
+</head>
+<body>
+    <div id="div0">
+        <span>HELLO</span>
+        <input type="button" value="你好" onclick="hello()">
+    </div>
+</body>
+</html>
